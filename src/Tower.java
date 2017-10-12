@@ -1,6 +1,6 @@
 
 public class Tower {
-	private int damage, position;
+	private int damage, position, cost;
 	private boolean willFire;
 	
 	public int getDamage(){
@@ -15,6 +15,10 @@ public class Tower {
 		return this.willFire;
 	}
 	
+	public int getCost(){
+		return this.cost;
+	}
+	
 	public void setDamage(int damage){
 		this.damage = damage;	
 	}
@@ -25,6 +29,10 @@ public class Tower {
 	
 	public void setWillFire(boolean willFire){
 		this.willFire = willFire;
+	}
+	
+	public void setCost(int cost){
+		this.cost = cost;
 	}
 	
 }

@@ -2,7 +2,8 @@
 public class TowerDefence {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		Game towerDef = new Game(Integer.parseInt(args[0]));
+		towerDef.play();
 	}
 
 }
