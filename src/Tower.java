@@ -1,21 +1,30 @@
 
 public class Tower {
-	public int getDamage(){
-	int damage = 0;
+	private int damage, position;
+	private boolean willFire;
 	
-	return damage;	
+	public int getDamage(){
+	return this.damage;	
 	}
 	
 	public int getPosition(){
-		int position = 0;
-		
-		return position;
+		return this.position;
 	}
 	
 	public boolean willFire(int timeStep){
-		boolean fire = true;
+		return this.willFire;
+	}
+	
+	public void setDamage(int damage){
+		this.damage = damage;	
+	}
 		
-		return fire;
+	public void setPosition(int position){
+		this.position = position;
+	}
+	
+	public void setWillFire(boolean willFire){
+		this.willFire = willFire;
 	}
 	
 }

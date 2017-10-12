@@ -1,15 +1,21 @@
 
 public class Enemy {
+	private int health, position;
+	
 	public int getHealth(){
-		int health = 0;
-		
-		return health;
+		return this.health;
 	}
 	
 	public int getPosition(){
-		int position = 0;
-		
-		return position;
+		return this.position;
+	}
+	
+	public void setHealth(int health){
+		this.health = health;
+	}
+	
+	public void setPosition(int position){
+		this.position = position;
 	}
 	
 	public void hit(Tower t){
