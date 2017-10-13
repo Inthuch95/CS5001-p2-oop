@@ -7,14 +7,15 @@ public class TowerDefence {
 		boolean gameOver = false;
 		towerDef.buildTower();
 		while(!gameOver){
-			gameOver = towerDef.checkGameOver();
 			towerDef.spawnEnemies();
-			System.out.println("Time step " + towerDef.getTimeStep() + "\n");
+			towerDef.updateTowerStatus();
+			System.out.println("Time step " + towerDef.getTimeStep());
 			System.out.println(towerDef);
 			towerDef.advance();
-			
-			gameOver = true;
+			gameOver = towerDef.checkGameOver();
 		}
+		System.out.println("End game summary");
+		System.out.println(towerDef);
 		System.out.println("Game Over");
 	}
 

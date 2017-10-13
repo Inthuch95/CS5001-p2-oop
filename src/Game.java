@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -17,7 +19,13 @@ public class Game {
 	public void advance(){
 		shootEnemies();
 		for(int i=0;i<enemies.size();i++){
-			enemies.get(i).advance();
+			enemies.get(i).willAdvance(this.timeStep);
+			if(enemies.get(i).getWillAdvance()){
+				enemies.get(i).advance();
+				if(enemies.get(i).getPosition() > this.corridorLength){
+					enemies.get(i).setPosition(this.corridorLength);
+				}
+			}
 		}
 		this.timeStep += 1;
 	}
@@ -34,8 +42,30 @@ public class Game {
 		return gameOver;
 	}
 	
+	public void updateTowerStatus(){
+		for(int i=0;i<this.towers.size();i++){
+			this.towers.get(i).willFire(this.timeStep);
+		}
+	}
+	
 	private void shootEnemies(){
-		
+		// Each tower shoot the closest enemies
+		for(int i=0;i<this.towers.size();i++){
+			if(enemies.size() > 0){
+				if(this.enemies.get(0).getPosition() <= 
+						this.towers.get(i).getPosition() && 
+						this.towers.get(i).getWillFire()){
+					this.enemies.get(0).hit(this.towers.get(i));
+					if(!(this.towers.get(i) instanceof Slingshot)){
+						this.towers.get(i).setWillFire(false);
+					}
+					// remove the enemy when it dies
+					if(this.enemies.get(0).getHealth() <= 0){
+						this.enemies.remove(0);
+					}
+				}
+			}
+		}
 	}
 	
 	public void spawnEnemies(){
@@ -46,18 +76,26 @@ public class Game {
 		for(int i=0;i<numOfEnemies;i++){
 			switch(enemyType){
 				case 0:
-					this.enemies.add(new Rat());
+					this.enemies.add(new Rat(this.timeStep));
 					break;
 				case 1:
-					this.enemies.add(new Elephant());
+					this.enemies.add(new Elephant(this.timeStep));
 					break;
 				case 2:
-					this.enemies.add(new Godzilla());
+					this.enemies.add(new Godzilla(this.timeStep));
 					break;
 				default:
 					System.out.println("Unknown enemy!");
 			}
 		}
+		
+		// sort array based on enemy position
+		Collections.sort(this.enemies, new Comparator<Enemy>() {
+	        @Override public int compare(Enemy e1, Enemy e2) {
+	            return e2.getPosition()-e1.getPosition(); 
+	        }
+
+	    });
 	}
 	
 	public void buildTower(){
@@ -133,6 +171,13 @@ public class Game {
 			}
 		}
 		scanner.close();
+		// small tower shoot first
+		Collections.sort(this.towers, new Comparator<Tower>() {
+	        @Override public int compare(Tower t1, Tower t2) {
+	            return t1.getDamage()-t2.getDamage(); 
+	        }
+
+	    });
 	}
 	
 	public int getTimeStep(){
@@ -141,11 +186,11 @@ public class Game {
 	
 	@Override
 	public String toString(){
-		String output = "Tower status:\n";
+		String output = "Tower status\n";
 		for(int i=0;i<this.towers.size();i++){
 			output += this.towers.get(i);
 		}
-		output += "\nEnemies Status:\n";
+		output += "\nEnemies Status\n";
 		for(int i=0;i<this.enemies.size();i++){
 			output += this.enemies.get(i);
 		}
