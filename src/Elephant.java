@@ -5,4 +5,5 @@ public class Elephant extends Enemy {
 		this.setPosition(1);
 		this.setSpawnTime(timeStep);
 	}
+	
 }

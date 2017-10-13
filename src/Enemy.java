@@ -28,12 +28,7 @@ public class Enemy {
 	}
 	
 	public void advance(){
-		if(this instanceof Godzilla || this instanceof Rat){
-			this.setPosition(this.getPosition() + 2);
-		}
-		else if(this instanceof Elephant){
-			this.setPosition(this.getPosition() + 1);
-		}
+		this.setPosition(this.getPosition() + 1);
 	}
 	
 	public void willAdvance(int timeStep){
@@ -41,16 +36,12 @@ public class Enemy {
 			this.willAdvance = true;
 		}
 		else{
-			this.willAdvance = checkAdvanceStatus(this, timeStep);
+			this.willAdvance = this.checkAdvanceStatus(this, timeStep);
 		}
 	}
 	
 	public boolean getWillAdvance(){
 		return this.willAdvance;
-	}
-	
-	public void setWillAdvance(boolean willAdvance){
-		this.willAdvance = willAdvance;
 	}
 	
 	private boolean checkAdvanceStatus(Enemy e, int timeStep){

@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Game {
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	private ArrayList<Tower> towers = new ArrayList<Tower>();
+	private ArrayList<Integer> occupiedPos = new ArrayList<Integer>();
 	private Random generator = new Random();
 	private int corridorLength, timeStep;
 	private int budget = 100;
@@ -50,22 +51,33 @@ public class Game {
 	
 	private void shootEnemies(){
 		// Each tower shoot the closest enemies
+		int target;
 		for(int i=0;i<this.towers.size();i++){
 			if(enemies.size() > 0){
-				if(this.enemies.get(0).getPosition() <= 
-						this.towers.get(i).getPosition() && 
-						this.towers.get(i).getWillFire()){
-					this.enemies.get(0).hit(this.towers.get(i));
+				target = this.chooseTarget(this.towers.get(i).getPosition());
+				if(this.towers.get(i).getWillFire()){
+					this.enemies.get(target).hit(this.towers.get(i));
 					if(!(this.towers.get(i) instanceof Slingshot)){
 						this.towers.get(i).setWillFire(false);
 					}
 					// remove the enemy when it dies
-					if(this.enemies.get(0).getHealth() <= 0){
-						this.enemies.remove(0);
+					if(this.enemies.get(target).getHealth() <= 0){
+						this.enemies.remove(target);
 					}
 				}
 			}
 		}
+	}
+	
+	private int chooseTarget(int towerPos){
+		int target = 0;
+		for(int i=0;i<this.enemies.size();i++){
+			if(this.enemies.get(i).getPosition() <= towerPos){
+				target = i;
+				break;
+			}
+		}
+		return target;
 	}
 	
 	public void spawnEnemies(){
@@ -111,7 +123,7 @@ public class Game {
 				+ "specified position\n");
 		System.out.printf("%-30s %5s", "done", "Exit tower building phase\n\n");
 		System.out.println("Remaining budget: " + Integer.toString(this.budget));
-		while(!finishedBuilding){
+		while(!finishedBuilding && this.budget > 0){
 			System.out.println("Command: ");
 			cmd = scanner.nextLine();
 			String[] cmdSplitted = cmd.split("\\s+");
@@ -123,42 +135,45 @@ public class Game {
 					towerPos = Integer.parseInt(cmdSplitted[1]);
 					Slingshot slingshot = new Slingshot(towerPos);
 					cost = slingshot.getCost();
-					if(this.budget-cost >= 0){
+					if(this.budget-cost >= 0 && !this.occupiedPos.contains(towerPos)){
 						this.towers.add(slingshot);
 						this.budget = this.budget - cost;
+						this.occupiedPos.add(towerPos);
 						System.out.println("Remaining budget: " + 
 								Integer.toString(this.budget));
 					}
 					else{
-						System.out.println("You cannot afford this tower!");
+						System.out.println("You cannot build this tower!");
 					}
 					break;
 				case "C":
 					towerPos = Integer.parseInt(cmdSplitted[1]);
 					Catapult catapult = new Catapult(towerPos);
 					cost = catapult.getCost();
-					if(this.budget-cost >= 0){
+					if(this.budget-cost >= 0 && !this.occupiedPos.contains(towerPos)){
 						this.towers.add(catapult);
 						this.budget = this.budget - cost;
+						this.occupiedPos.add(towerPos);
 						System.out.println("Remaining budget: " + 
 								Integer.toString(this.budget));
 					}
 					else{
-						System.out.println("You cannot afford this tower!");
+						System.out.println("You cannot build this tower!");
 					}
 					break;
 				case "V":
 					towerPos = Integer.parseInt(cmdSplitted[1]);
 					VacuumImploder vi = new VacuumImploder(towerPos);
 					cost = vi.getCost();
-					if(this.budget-cost >= 0){
+					if(this.budget-cost >= 0 && !this.occupiedPos.contains(towerPos)){
 						this.towers.add(vi);
 						this.budget = this.budget - cost;
+						this.occupiedPos.add(towerPos);
 						System.out.println("Remaining budget: " + 
 								Integer.toString(this.budget));
 					}
 					else{
-						System.out.println("You cannot afford this tower!");
+						System.out.println("You cannot build this tower!");
 					}
 					break;
 				case "done":
