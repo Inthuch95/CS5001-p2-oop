@@ -35,4 +35,33 @@ public class Tower {
 		this.cost = cost;
 	}
 	
+	@Override
+	public String toString(){
+		String damage = "Damage: " + Integer.toString(this.damage);
+		String position = "Position: " + Integer.toString(this.position);
+		String status;
+		String tower;
+		
+		if(this.willFire){
+			status = "Status: Ready";
+		}
+		else{
+			status = "Status: Loading";
+		}
+		
+		if(this.damage == 10){
+			tower = "Tower: Vacuum Imploder";
+		}
+		else if(this.damage == 5){
+			tower = "Tower: Catapult";
+		}
+		else{
+			tower = "Tower: Slingshot";
+		}
+		String output = String.format("%-25s %-15s %-15s %-15s\n", tower, damage, 
+				position, status);
+		
+		return output;
+	}
+	
 }

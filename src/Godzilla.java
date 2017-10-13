@@ -1,7 +1,7 @@
 
 public class Godzilla extends Enemy {
 	public Godzilla(){
-		this.setHealth(30);
+		this.setHealth(20);
 		this.setPosition(1);
 	}
 }
