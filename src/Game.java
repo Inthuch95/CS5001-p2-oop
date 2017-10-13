@@ -14,6 +14,30 @@ public class Game {
 		this.timeStep = 0;
 	}
 	
+	public void advance(){
+		shootEnemies();
+		for(int i=0;i<enemies.size();i++){
+			enemies.get(i).advance();
+		}
+		this.timeStep += 1;
+	}
+	
+	public boolean checkGameOver(){
+		boolean gameOver = false;
+		for(int i=0;i<enemies.size();i++){
+			if(enemies.get(i).getPosition() == this.corridorLength){
+				gameOver = true;
+				break;
+			}
+		}
+		
+		return gameOver;
+	}
+	
+	private void shootEnemies(){
+		
+	}
+	
 	public void spawnEnemies(){
 		// can spawn up to three enemies at each time step
 		// can only spawn one type of enemy at each time step
@@ -113,10 +137,6 @@ public class Game {
 	
 	public int getTimeStep(){
 		return this.timeStep;
-	}
-	
-	public void advance(){
-		this.timeStep += 1;
 	}
 	
 	@Override
