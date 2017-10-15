@@ -5,5 +5,6 @@ public class Catapult extends Tower {
 		this.setPosition(position);
 		this.setWillFire(true);
 		this.setCost(20);
+		this.setFired(false);
 	}
 }

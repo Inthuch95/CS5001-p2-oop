@@ -1,7 +1,7 @@
 
 public class Tower {
-	private int damage, position, cost;
-	private boolean willFire;
+	private int damage, position, cost, firedTime;
+	private boolean willFire, fired;
 	
 	public int getDamage(){
 	return this.damage;	
@@ -12,7 +12,7 @@ public class Tower {
 	}
 	
 	public boolean willFire(int timeStep){
-		if(timeStep == 0){
+		if(timeStep == 1){
 			this.willFire = true;
 		}
 		else{
@@ -28,10 +28,10 @@ public class Tower {
 	
 	private boolean checkTowerStatus(Tower t, int timeStep){
 		boolean willFire = false;
-		if(t instanceof VacuumImploder && (timeStep % 5) == 0){
+		if(t instanceof VacuumImploder && ((timeStep-this.firedTime) % 5) == 0){
 			willFire = true;
 		}
-		else if(t instanceof Catapult && (timeStep % 3) == 0){
+		else if(t instanceof Catapult && ((timeStep-this.firedTime) % 3) == 0){
 			willFire = true;
 		}
 		else if(t instanceof Slingshot){
@@ -44,6 +44,22 @@ public class Tower {
 	
 	public int getCost(){
 		return this.cost;
+	}
+	
+	public int getFiredTime(){
+		return this.firedTime;
+	}
+	
+	public boolean getFired(){
+		return this.fired;
+	}
+	
+	public void setFired(boolean fired){
+		this.fired = fired;
+	}
+	
+	public void setFiredTime(int firedTime){
+		this.firedTime = firedTime;
 	}
 	
 	public void setDamage(int damage){

@@ -5,5 +5,6 @@ public class Slingshot extends Tower {
 		this.setPosition(position);
 		this.setWillFire(true);
 		this.setCost(5);
+		this.setFired(false);
 	}
 }

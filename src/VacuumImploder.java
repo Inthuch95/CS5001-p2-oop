@@ -5,5 +5,6 @@ public class VacuumImploder extends Tower {
 		this.setPosition(position);
 		this.setWillFire(true);
 		this.setCost(30);
+		this.setFired(false);
 	}
 }

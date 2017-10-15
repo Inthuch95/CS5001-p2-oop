@@ -14,7 +14,7 @@ public class Game {
 	
 	public Game(int corridorLength){
 		this.corridorLength = corridorLength;
-		this.timeStep = 0;
+		this.timeStep = 1;
 	}
 	
 	public void advance(){
@@ -45,7 +45,9 @@ public class Game {
 	
 	public void updateTowerStatus(){
 		for(int i=0;i<this.towers.size();i++){
-			this.towers.get(i).willFire(this.timeStep);
+			if(this.towers.get(i).getFired()){
+				this.towers.get(i).willFire(this.timeStep);
+			}
 		}
 	}
 	
@@ -57,6 +59,8 @@ public class Game {
 				target = this.chooseTarget(this.towers.get(i).getPosition());
 				if(this.towers.get(i).getWillFire()){
 					this.enemies.get(target).hit(this.towers.get(i));
+					this.towers.get(i).setFiredTime(this.timeStep);
+					this.towers.get(i).setFired(true);
 					if(!(this.towers.get(i) instanceof Slingshot)){
 						this.towers.get(i).setWillFire(false);
 					}
