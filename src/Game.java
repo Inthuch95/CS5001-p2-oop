@@ -66,7 +66,7 @@ public class Game {
             if (enemies.size() > 0) {
                 target = this.chooseTarget(this.towers.get(i).getPosition());
                 if (this.towers.get(i).getWillFire()) {
-                    this.enemies.get(0).hit(this.towers.get(i));
+                    this.enemies.get(target).hit(this.towers.get(i));
                     if (this.towers.get(i).getFired()) {
                         this.towers.get(i).setFiredTime(this.timeStep);
                     }
