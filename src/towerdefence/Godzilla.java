@@ -2,7 +2,6 @@ package towerdefence;
 
 public class Godzilla extends Enemy {
     private static final int HEALTH = 20;
-    
     public Godzilla() {
         this.setHealth(HEALTH);
         this.setPosition(0);

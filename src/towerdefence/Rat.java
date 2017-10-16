@@ -2,7 +2,6 @@ package towerdefence;
 
 public class Rat extends Enemy {
     private static final int HEALTH = 1;
-    
     public Rat() {
         this.setHealth(HEALTH);
         this.setPosition(0);

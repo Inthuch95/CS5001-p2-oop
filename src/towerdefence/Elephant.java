@@ -2,7 +2,6 @@ package towerdefence;
 
 public class Elephant extends Enemy {
     private static final int HEALTH = 10;
-    
     public Elephant() {
         this.setHealth(HEALTH);
         this.setPosition(0);

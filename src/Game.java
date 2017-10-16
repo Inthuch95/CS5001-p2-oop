@@ -21,7 +21,6 @@ public class Game {
     private int corridorLength, timeStep, budget;
     private static final int STARTING_BUDGET = 100;
     private static final int RND_MAX = 3;
-
     public Game(int corridorLength) {
         this.corridorLength = corridorLength;
         this.timeStep = 1;

@@ -5,7 +5,6 @@ public class Tower {
     private boolean willFire, fired;
     private static final int CATAPULT_DELAY = 3;
     private static final int VI_DELAY = 5;
-
     public int getDamage() {
         return this.damage;
     }

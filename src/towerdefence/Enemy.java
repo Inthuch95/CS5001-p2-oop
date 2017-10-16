@@ -5,7 +5,6 @@ public class Enemy {
     private boolean willAdvance;
     private static final int GODZILLA_DELAY = 5;
     private static final int ELEPHANT_DELAY = 2;
-
     public int getHealth() {
         return this.health;
     }
