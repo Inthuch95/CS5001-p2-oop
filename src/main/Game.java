@@ -193,7 +193,8 @@ public class Game {
     
     public void buildTower(Tower t){
     	 int cost = t.getCost();
-         if (this.budget - cost >= 0 && !this.occupiedPos.contains(t.getPosition())) {
+         if (this.budget - cost >= 0 && !this.occupiedPos.contains(t.getPosition()) && 
+        		 t.getPosition() < this.corridorLength && t.getPosition() >= 0) {
              this.towers.add(t);
              this.budget = this.budget - cost;
              this.occupiedPos.add(t.getPosition());

@@ -5,7 +5,6 @@ public class Rat extends Enemy {
     public Rat() {
         this.setHealth(HEALTH);
         this.setPosition(0);
-        this.setDelay(0);
     }
 
     public void advance() {
@@ -13,7 +12,6 @@ public class Rat extends Enemy {
         this.willAdvance(this.getTimeStep());
         if (this.getWillAdvance()) {
             this.setPosition(this.getPosition() + 2);
-            this.setDelay(0);
         }
     }
 
