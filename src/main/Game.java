@@ -1,3 +1,4 @@
+package main;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -44,6 +45,7 @@ public class Game {
         for (int i = 0; i < enemies.size(); i++) {
             if (enemies.get(i).getPosition() == this.corridorLength - 1) {
                 gameOver = true;
+                sortEnemy();
                 break;
             }
         }
@@ -120,22 +122,15 @@ public class Game {
             }
         }
 
-        // sort array based on enemy position
-        Collections.sort(this.enemies, new Comparator<Enemy>() {
-            @Override
-            public int compare(Enemy e1, Enemy e2) {
-                return e2.getPosition() - e1.getPosition();
-            }
-
-        });
+        sortEnemy();
     }
 
-    public void buildTower() {
+    public void startBuildingPhase() {
         boolean finishedBuilding = false;
         Scanner scanner = new Scanner(System.in);
         String cmd;
         String towerType;
-        int towerPos, cost;
+        int towerPos;
 
         System.out.println("Tower building phase");
         System.out.println("Usage: ");
@@ -153,41 +148,17 @@ public class Game {
             case "S":
                 towerPos = Integer.parseInt(cmdSplitted[1]);
                 Slingshot slingshot = new Slingshot(towerPos);
-                cost = slingshot.getCost();
-                if (this.budget - cost >= 0 && !this.occupiedPos.contains(towerPos)) {
-                    this.towers.add(slingshot);
-                    this.budget = this.budget - cost;
-                    this.occupiedPos.add(towerPos);
-                    System.out.println("Remaining budget: " + Integer.toString(this.budget));
-                } else {
-                    System.out.println("You cannot build this tower!");
-                }
+                buildTower(slingshot);
                 break;
             case "C":
                 towerPos = Integer.parseInt(cmdSplitted[1]);
                 Catapult catapult = new Catapult(towerPos);
-                cost = catapult.getCost();
-                if (this.budget - cost >= 0 && !this.occupiedPos.contains(towerPos)) {
-                    this.towers.add(catapult);
-                    this.budget = this.budget - cost;
-                    this.occupiedPos.add(towerPos);
-                    System.out.println("Remaining budget: " + Integer.toString(this.budget));
-                } else {
-                    System.out.println("You cannot build this tower!");
-                }
+                buildTower(catapult);
                 break;
             case "V":
                 towerPos = Integer.parseInt(cmdSplitted[1]);
                 VacuumImploder vi = new VacuumImploder(towerPos);
-                cost = vi.getCost();
-                if (this.budget - cost >= 0 && !this.occupiedPos.contains(towerPos)) {
-                    this.towers.add(vi);
-                    this.budget = this.budget - cost;
-                    this.occupiedPos.add(towerPos);
-                    System.out.println("Remaining budget: " + Integer.toString(this.budget));
-                } else {
-                    System.out.println("You cannot build this tower!");
-                }
+                buildTower(vi);
                 break;
             case "done":
                 System.out.println("Tower set up completed\n");
@@ -208,9 +179,36 @@ public class Game {
 
         });
     }
+    
+    private void sortEnemy(){
+    	// sort array based on enemy position
+        Collections.sort(this.enemies, new Comparator<Enemy>() {
+            @Override
+            public int compare(Enemy e1, Enemy e2) {
+                return e2.getPosition() - e1.getPosition();
+            }
+
+        });
+    }
+    
+    public void buildTower(Tower t){
+    	 int cost = t.getCost();
+         if (this.budget - cost >= 0 && !this.occupiedPos.contains(t.getPosition())) {
+             this.towers.add(t);
+             this.budget = this.budget - cost;
+             this.occupiedPos.add(t.getPosition());
+             System.out.println("Remaining budget: " + Integer.toString(this.budget));
+         } else {
+             System.out.println("You cannot build this tower!");
+         }
+    }
 
     public int getTimeStep() {
         return this.timeStep;
+    }
+    
+    public int getBudget(){
+    	return this.budget;
     }
 
     @Override
