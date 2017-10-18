@@ -17,16 +17,16 @@ public class TowerDefence {
             towerDef.updateTowerStatus();
             TimeUnit.SECONDS.sleep(1);
             pb.inheritIO().start().waitFor();
-            System.out.println("Time step " + towerDef.getTimeStep());
             System.out.println(towerDef);
+            System.out.println("Time step " + towerDef.getTimeStep());
             towerDef.advance();
             gameOver = towerDef.checkGameOver();
         }
         TimeUnit.SECONDS.sleep(1);
         pb.inheritIO().start().waitFor();
         System.out.println("End game summary");
-        System.out.println("Time step " + towerDef.getTimeStep());
         System.out.println(towerDef);
+        System.out.println("Time step " + towerDef.getTimeStep());
         System.out.println("Game Over");
     }
 
