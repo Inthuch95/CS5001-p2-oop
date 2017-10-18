@@ -1,7 +1,14 @@
 package towerdefence;
 
+/**
+ * @author Inthuch Therdchanakul
+ *A class of enemy godzilla
+ */
 public class Godzilla extends Enemy {
     private static final int HEALTH = 20;
+    /**
+     * Spawn a godzilla in the game
+     */
     public Godzilla() {
         this.setHealth(HEALTH);
         this.setPosition(0);

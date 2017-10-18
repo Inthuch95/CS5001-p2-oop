@@ -14,6 +14,10 @@ import towerdefence.Slingshot;
 import towerdefence.Catapult;
 import towerdefence.VacuumImploder;;
 
+/**
+ * @author Inthuch Therdchanakul
+ * The class that handles Tower Defence game's functionalities
+ */
 public class Game {
     private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     private ArrayList<Tower> towers = new ArrayList<Tower>();
@@ -22,12 +26,19 @@ public class Game {
     private int corridorLength, timeStep, budget;
     private static final int STARTING_BUDGET = 100;
     private static final int RND_MAX = 3;
+    /**
+     * @param corridorLength Length of corridor
+     * Create the game with specified corridor length
+     */
     public Game(int corridorLength) {
         this.corridorLength = corridorLength;
         this.timeStep = 1;
         this.budget = STARTING_BUDGET;
     }
 
+    /**
+     * Advance the game to the next time step
+     */
     public void advance() {
         shootEnemies();
         for (int i = 0; i < enemies.size(); i++) {
@@ -40,6 +51,9 @@ public class Game {
         this.timeStep += 1;
     }
 
+    /**
+     * @return The boolean value that indicate the status of the game
+     */
     public boolean checkGameOver() {
         boolean gameOver = false;
         for (int i = 0; i < enemies.size(); i++) {
@@ -53,6 +67,9 @@ public class Game {
         return gameOver;
     }
 
+    /**
+     * Update the state of the towers
+     */
     public void updateTowerStatus() {
         for (int i = 0; i < this.towers.size(); i++) {
             if (this.towers.get(i).getFired()) {
@@ -95,6 +112,9 @@ public class Game {
         return target;
     }
 
+    /**
+     * Randomly spawn enemies in the game
+     */
     public void spawnEnemies() {
         // can spawn up to three enemies at each time step
         // can only spawn one type of enemy at each time step
@@ -125,6 +145,9 @@ public class Game {
         sortEnemy();
     }
 
+    /**
+     * Initiate tower building phase
+     */
     public void startBuildingPhase() {
         boolean finishedBuilding = false;
         Scanner scanner = new Scanner(System.in);
@@ -191,6 +214,10 @@ public class Game {
         });
     }
     
+    /**
+     * @param t Tower that is going to be built
+     * Build the tower at specified position
+     */
     public void buildTower(Tower t){
     	 int cost = t.getCost();
          if (this.budget - cost >= 0 && !this.occupiedPos.contains(t.getPosition()) && 
@@ -204,10 +231,16 @@ public class Game {
          }
     }
 
+    /**
+     * @return Current time step
+     */
     public int getTimeStep() {
         return this.timeStep;
     }
     
+    /**
+     * @return Current budget
+     */
     public int getBudget(){
     	return this.budget;
     }
